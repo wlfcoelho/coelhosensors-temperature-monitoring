@@ -1,5 +1,6 @@
 package com.coelhoworks.coelhosensors.temperature.monitoring.api.controller;
 
+import com.coelhoworks.coelhosensors.temperature.monitoring.ConstantApp;
 import com.coelhoworks.coelhosensors.temperature.monitoring.api.model.SensorMonitoringOuput;
 import com.coelhoworks.coelhosensors.temperature.monitoring.domain.model.SensorId;
 import com.coelhoworks.coelhosensors.temperature.monitoring.domain.model.SensorMonitoring;
@@ -43,7 +44,7 @@ public class SensorMonitoringController {
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void enable(@PathVariable TSID sensorId) {
     SensorMonitoring sensorMonitoring = findByIdOrDefault(sensorId);
-    if (Boolean.TRUE.equals(sensorMonitoring.getEnabled())) {
+    if (ConstantApp.TRUE.equals(sensorMonitoring.getEnabled())) {
       throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
