@@ -1,6 +1,6 @@
 package com.coelhoworks.coelhosensors.temperature.monitoring.api.controller;
 
-import com.coelhoworks.coelhosensors.temperature.monitoring.api.model.TemperatureLogOutput;
+import com.coelhoworks.coelhosensors.temperature.monitoring.api.model.TemperatureLogData;
 import com.coelhoworks.coelhosensors.temperature.monitoring.domain.model.SensorId;
 import com.coelhoworks.coelhosensors.temperature.monitoring.domain.model.TemperatureLog;
 import com.coelhoworks.coelhosensors.temperature.monitoring.domain.repository.TemperatureLogRepository;
@@ -22,12 +22,12 @@ public class TemperatureLogController {
   private final TemperatureLogRepository temperatureLogRepository;
 
   @GetMapping
-  public Page<TemperatureLogOutput> search(@PathVariable TSID sensorId,
-                                           @PageableDefault Pageable pageable){
+  public Page<TemperatureLogData> search(@PathVariable TSID sensorId,
+                                         @PageableDefault Pageable pageable){
 
     Page<TemperatureLog> temperatureLogs = temperatureLogRepository.findAllBySensorId(
             new SensorId(sensorId), pageable);
-    return temperatureLogs.map(temperatureLog -> TemperatureLogOutput.builder()
+    return temperatureLogs.map(temperatureLog -> TemperatureLogData.builder()
             .id(temperatureLog.getId().getValue())
             .sensorId(temperatureLog.getSensorId().getValue())
             .registeredAt(temperatureLog.getRegisteredAt())
