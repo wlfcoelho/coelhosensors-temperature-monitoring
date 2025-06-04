@@ -32,7 +32,7 @@ public class RabbitMQConfig {
 
 
   public FanoutExchange exchange(){
-    return ExchangeBuilder.fanoutExchange("tenperature-processsing.temperature-received.v1.e")
+    return ExchangeBuilder.fanoutExchange("temperature-processsing.temperature-received.v1.e")
             .build();
   }
 
