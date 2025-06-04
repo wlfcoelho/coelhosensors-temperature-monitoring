@@ -1,6 +1,7 @@
 package com.coelhoworks.coelhosensors.temperature.monitoring.infrastructure.rabbitmq;
 
 import com.coelhoworks.coelhosensors.temperature.monitoring.api.model.TemperatureLogData;
+import com.coelhoworks.coelhosensors.temperature.monitoring.domain.service.SensorAlertService;
 import com.coelhoworks.coelhosensors.temperature.monitoring.domain.service.TemperatureMonitoringService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -20,6 +21,7 @@ import static com.coelhoworks.coelhosensors.temperature.monitoring.infrastructur
 public class RabbitMQListener {
 
   private final TemperatureMonitoringService temperatureMonitoringService;
+  private final SensorAlertService servicerAlertService;
 
   @RabbitListener(queues = QUEUE_PROCESS_TEMPERATURE, concurrency = "2-3")
   @SneakyThrows
@@ -32,7 +34,7 @@ public class RabbitMQListener {
   @RabbitListener(queues = QUEUE_ALERTING, concurrency = "2-3")
   @SneakyThrows
   public void handleAlerting(@Payload TemperatureLogData temperatureLogData) {
-    temperatureMonitoringService.processTemperatureLog(temperatureLogData);
+    servicerAlertService.handleAlert(temperatureLogData);
 
     Thread.sleep(Duration.ofSeconds(5));
   }
